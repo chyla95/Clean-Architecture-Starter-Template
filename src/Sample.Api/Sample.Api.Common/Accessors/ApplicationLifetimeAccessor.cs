@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace MC.Sample.Api.Utilities.Accessors;
+namespace Sample.Api.Common.Accessors;
 
 public class ApplicationLifetimeAccessor : IApplicationLifetimeAccessor
 {

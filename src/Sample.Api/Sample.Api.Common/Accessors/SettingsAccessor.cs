@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace MC.Sample.Api.Utilities.Accessors;
+namespace Sample.Api.Common.Accessors;
 
 public class SettingsAccessor : ISettingsAccessor
 {
