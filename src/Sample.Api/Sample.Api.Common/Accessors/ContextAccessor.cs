@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace MC.Sample.Api.Utilities.Accessors;
+namespace Sample.Api.Common.Accessors;
 
 public class ContextAccessor : IContextAccessor
 {
