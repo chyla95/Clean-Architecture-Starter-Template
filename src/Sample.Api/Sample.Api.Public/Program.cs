@@ -1,4 +1,7 @@
 using Sample.Api.Common;
+using System.Reflection;
+
+Assembly callingAssembly = Assembly.GetCallingAssembly();
 
 // Services
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

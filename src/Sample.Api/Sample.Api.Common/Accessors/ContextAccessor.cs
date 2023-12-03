@@ -1,17 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 
 namespace Sample.Api.Common.Accessors;
-
-public class ContextAccessor : IContextAccessor
+public class ContextAccessor(IHttpContextAccessor httpContextAccessor, IApplicationLifetimeAccessor applicationLifetimeAccessor) : IContextAccessor
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-    private readonly IApplicationLifetimeAccessor _applicationLifetimeAccessor;
-
-    public ContextAccessor(IHttpContextAccessor httpContextAccessor, IApplicationLifetimeAccessor applicationLifetimeAccessor)
-    {
-        _httpContextAccessor = httpContextAccessor;
-        _applicationLifetimeAccessor = applicationLifetimeAccessor;
-    }
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly IApplicationLifetimeAccessor _applicationLifetimeAccessor = applicationLifetimeAccessor;
 
     public CancellationToken RequestCancellationToken => GetRequestCancellationToken();
     public CancellationToken CombinedCancellationToken => GetCombinedCancellationToken();

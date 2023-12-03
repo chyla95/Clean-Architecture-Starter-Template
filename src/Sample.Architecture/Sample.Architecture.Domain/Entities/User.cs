@@ -1,5 +1,4 @@
 ﻿namespace Sample.Architecture.Domain.Entities;
-
 public class User : Entity
 {
     public required string Email { get; set; }
