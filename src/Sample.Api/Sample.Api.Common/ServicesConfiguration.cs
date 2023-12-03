@@ -2,7 +2,6 @@
 using Sample.Api.Common.Accessors;
 
 namespace Sample.Api.Common;
-
 public static class ServicesConfiguration
 {
     public static IServiceCollection AddAccessors(this IServiceCollection services)
