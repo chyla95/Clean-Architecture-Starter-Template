@@ -8,7 +8,7 @@ public static class ServicesConfiguration
     {
         services.AddSingleton<IApplicationLifetimeAccessor, ApplicationLifetimeAccessor>();
         services.AddScoped<IContextAccessor, ContextAccessor>();
-        services.AddScoped<ISettingsAccessor, SettingsAccessor>();
+
 
         return services;
     }
