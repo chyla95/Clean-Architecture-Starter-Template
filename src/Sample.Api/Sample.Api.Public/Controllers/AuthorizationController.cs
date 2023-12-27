@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sample.Api.Common.Accessors;
 
 namespace Sample.Api.Public.Controllers;
 [Route("api/[controller]")]

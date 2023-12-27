@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sample.Architecture.Application\Sample.Architecture.Application.csproj" />
+    <ProjectReference Include="..\Sample.Architecture.Domain\Sample.Architecture.Domain.csproj" />
   </ItemGroup>
 
 </Project>
