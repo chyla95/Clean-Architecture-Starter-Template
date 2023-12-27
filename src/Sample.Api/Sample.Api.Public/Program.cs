@@ -1,5 +1,5 @@
 using System.Reflection;
-using Sample.Api.Common.Extensions.DependencyInjection;
+using Sample.Api.Common.Utilities.Extensions.DependencyInjection;
 using Sample.Architecture.Application.Extensions.DependencyInjection;
 using Sample.Architecture.Infrastructure.Extensions.DependencyInjection;
 
