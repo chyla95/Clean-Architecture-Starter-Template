@@ -1,9 +1,11 @@
-using Sample.Api.Common;
 using System.Reflection;
+using Sample.Api.Common.Extensions.DependencyInjection;
+using Sample.Architecture.Application.Extensions.DependencyInjection;
+using Sample.Architecture.Infrastructure.Extensions.DependencyInjection;
 
 Assembly callingAssembly = Assembly.GetCallingAssembly();
 
-// Services
+// Services from this assembly
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 if (builder.Environment.IsDevelopment())
 {
@@ -12,7 +14,15 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+// Services from Sample.Api.Common
 builder.Services.AddAccessors();
+
+// Services from Sample.Architecture.Application
+builder.Services.AddApplicationLayer();
+
+// Services from Sample.Architecture.Infrastructure
+builder.Services.AddInfrastructureLayer();
 
 // Middlewares
 WebApplication app = builder.Build();
