@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Sample.Architecture.Infrastructure.Extensions.DependencyInjection;
-public static class InfrastructureServiceCollectionExtensions
+public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructureLayer(this IServiceCollection services)
     {

@@ -2,7 +2,7 @@
 using Sample.Api.Common.Utilities.Accessors;
 
 namespace Sample.Api.Common.Utilities.Extensions.DependencyInjection;
-public static class CommonServiceCollectionExtensions
+public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAccessors(this IServiceCollection services)
     {
