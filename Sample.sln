@@ -9,15 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample.Api", "Sample.Api", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample.Architecture", "Sample.Architecture", "{F10282E4-B7D1-4BC0-AEEC-3A28E66A805D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Architecture.Domain", "src\Sample.Architecture\Sample.Architecture.Domain\Sample.Architecture.Domain.csproj", "{6B8A759B-A7C3-4011-889F-348182F5A8D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Architecture.Domain", "src\Sample.Architecture\Sample.Architecture.Domain\Sample.Architecture.Domain.csproj", "{6B8A759B-A7C3-4011-889F-348182F5A8D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Architecture.Application", "src\Sample.Architecture\Sample.Architecture.Application\Sample.Architecture.Application.csproj", "{60FB8D00-BE8E-4D9A-8180-61BC5EEFE3C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Architecture.Application", "src\Sample.Architecture\Sample.Architecture.Application\Sample.Architecture.Application.csproj", "{60FB8D00-BE8E-4D9A-8180-61BC5EEFE3C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Api.Public", "src\Sample.Api\Sample.Api.Public\Sample.Api.Public.csproj", "{9F393583-B5B4-4700-BBEA-69EB361F5B7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Api.Public", "src\Sample.Api\Sample.Api.Public\Sample.Api.Public.csproj", "{9F393583-B5B4-4700-BBEA-69EB361F5B7B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Architecture.Infrastructure", "src\Sample.Architecture\Sample.Architecture.Infrastructure\Sample.Architecture.Infrastructure.csproj", "{4B801752-8067-4A61-BD7C-B0B7D7235C98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Api.Common", "src\Sample.Api\Sample.Api.Common\Sample.Api.Common.csproj", "{DFB4FD2B-2582-4D6A-96E6-B28FDCEBC45B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample.Api.Common", "Sample.Api.Common", "{E57BCA06-A993-4275-93BD-5282EEE5B9A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Api.Common.Utilities", "src\Sample.Api\Sample.Api.Common\Sample.Api.Common.Utilities\Sample.Api.Common.Utilities.csproj", "{7F2D5B3D-A8AE-4420-AB64-D53B86D16843}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +43,10 @@ Global
 		{4B801752-8067-4A61-BD7C-B0B7D7235C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B801752-8067-4A61-BD7C-B0B7D7235C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B801752-8067-4A61-BD7C-B0B7D7235C98}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DFB4FD2B-2582-4D6A-96E6-B28FDCEBC45B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DFB4FD2B-2582-4D6A-96E6-B28FDCEBC45B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DFB4FD2B-2582-4D6A-96E6-B28FDCEBC45B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DFB4FD2B-2582-4D6A-96E6-B28FDCEBC45B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F2D5B3D-A8AE-4420-AB64-D53B86D16843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F2D5B3D-A8AE-4420-AB64-D53B86D16843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F2D5B3D-A8AE-4420-AB64-D53B86D16843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F2D5B3D-A8AE-4420-AB64-D53B86D16843}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,7 +58,8 @@ Global
 		{60FB8D00-BE8E-4D9A-8180-61BC5EEFE3C6} = {F10282E4-B7D1-4BC0-AEEC-3A28E66A805D}
 		{9F393583-B5B4-4700-BBEA-69EB361F5B7B} = {88FDB514-3412-437E-8620-AE65CEDAE524}
 		{4B801752-8067-4A61-BD7C-B0B7D7235C98} = {F10282E4-B7D1-4BC0-AEEC-3A28E66A805D}
-		{DFB4FD2B-2582-4D6A-96E6-B28FDCEBC45B} = {88FDB514-3412-437E-8620-AE65CEDAE524}
+		{E57BCA06-A993-4275-93BD-5282EEE5B9A0} = {88FDB514-3412-437E-8620-AE65CEDAE524}
+		{7F2D5B3D-A8AE-4420-AB64-D53B86D16843} = {E57BCA06-A993-4275-93BD-5282EEE5B9A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E1C46464-9112-42D1-AB9D-8A7E032D2625}
