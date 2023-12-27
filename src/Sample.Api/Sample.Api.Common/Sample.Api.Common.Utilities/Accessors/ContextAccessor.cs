@@ -9,7 +9,6 @@ public class ContextAccessor(IHttpContextAccessor httpContextAccessor, IApplicat
     public CancellationToken RequestCancellationToken => GetRequestCancellationToken();
     public CancellationToken CombinedCancellationToken => GetCombinedCancellationToken();
 
-    // Helper methods
     private CancellationToken GetCombinedCancellationToken()
     {
         CancellationToken requestAbortedCancellationToken = GetRequestCancellationToken();
