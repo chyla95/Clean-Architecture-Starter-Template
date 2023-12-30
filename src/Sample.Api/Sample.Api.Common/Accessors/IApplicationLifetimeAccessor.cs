@@ -1,4 +1,4 @@
-﻿namespace Sample.Api.Common.Utilities.Accessors;
+﻿namespace Sample.Api.Common.Accessors;
 public interface IApplicationLifetimeAccessor
 {
 	CancellationToken ApplicationStartedCancellationToken { get; }

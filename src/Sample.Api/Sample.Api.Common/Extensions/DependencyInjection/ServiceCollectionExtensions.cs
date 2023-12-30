@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Sample.Api.Common.Utilities.Accessors;
+using Sample.Api.Common.Accessors;
 
-namespace Sample.Api.Common.Utilities.Extensions.DependencyInjection;
+namespace Sample.Api.Common.Extensions.DependencyInjection;
 public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAccessors(this IServiceCollection services)

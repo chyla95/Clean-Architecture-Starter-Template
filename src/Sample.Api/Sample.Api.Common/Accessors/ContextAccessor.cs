@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Sample.Api.Common.Utilities.Accessors;
+namespace Sample.Api.Common.Accessors;
 public class ContextAccessor(IHttpContextAccessor httpContextAccessor, IApplicationLifetimeAccessor applicationLifetimeAccessor) : IContextAccessor
 {
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
