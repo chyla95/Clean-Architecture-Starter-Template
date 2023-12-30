@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace Sample.Api.Common.Utilities.Accessors;
+namespace Sample.Api.Common.Accessors;
 public class ApplicationLifetimeAccessor(IHostApplicationLifetime hostApplicationLifetime) : IApplicationLifetimeAccessor
 {
     private readonly IHostApplicationLifetime _hostApplicationLifetime = hostApplicationLifetime;
