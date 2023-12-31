@@ -53,12 +53,8 @@ internal sealed class JwtGeneratorService(
         if (expiredAfter is not null) yield return new Claim(JwtRegisteredClaimNames.Exp, (tokenGenerationTime + (expiredAfter ?? TimeSpan.Zero)).ToUnixTimeSeconds().ToString());
 
         // Iss
-        IEnumerable<string> issuers = jwtGeneratorOptions.Issuers;
-        if (issuers.Any())
-        {
-            IEnumerable<Claim> issuerClaims = issuers.Select(i => new Claim(JwtRegisteredClaimNames.Iss, i));
-            foreach (Claim issuerClaim in issuerClaims) yield return issuerClaim;
-        }
+        string? issuer = jwtGeneratorOptions.Issuer;
+        if (!string.IsNullOrWhiteSpace(issuer)) yield return new Claim(JwtRegisteredClaimNames.Iss, issuer);
 
         // Aud
         IEnumerable<string> audiences = jwtGeneratorOptions.Audiences;
