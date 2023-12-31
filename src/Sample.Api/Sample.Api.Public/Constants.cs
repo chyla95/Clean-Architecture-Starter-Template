@@ -3,7 +3,7 @@ public static class Constants
 {
     public static class AppSettingsKeys
     {
-        public const string Sample1 = "...";
-        public const string Sample2 = "...";
+        public const string JwtGenerator = "JwtGenerator";
+        public const string JwtValidator = "JwtValidator";
     }
 }
