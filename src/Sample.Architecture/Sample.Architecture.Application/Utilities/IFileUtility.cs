@@ -1,7 +1,7 @@
 ﻿using System.Text;
 
 namespace Sample.Architecture.Application.Utilities;
-internal interface IFileUtility
+public interface IFileUtility
 {
     string ReadAllText(string filePath);
     string ReadAllText(string filePath, Encoding? encoding);
