@@ -1,5 +1,9 @@
 using System.Reflection;
+using Sample.Api.Authentication.Jwt.Extensions.DependencyInjection;
+using Sample.Api.Authentication.Jwt.Strategies;
 using Sample.Api.Common.Extensions.DependencyInjection;
+using Sample.Api.Common.Strategies;
+using Sample.Api.Public;
 using Sample.Architecture.Application.Extensions.DependencyInjection;
 using Sample.Architecture.Infrastructure.Extensions.DependencyInjection;
 
@@ -15,14 +19,19 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Services from Sample.Api.Common
-builder.Services.AddAccessors();
-
 // Services from Sample.Architecture.Application
 builder.Services.AddApplicationLayer();
 
 // Services from Sample.Architecture.Infrastructure
 builder.Services.AddInfrastructureLayer();
+
+// Services from Sample.Api.Common
+builder.Services.AddAccessors();
+
+// Services from Sample.Api.Authentication.Jwt
+builder.Services.AddJwtGenerator<JwtGeneratorSigningCredentialsCreationStrategy>(Constants.AppSettingsKeys.JwtGenerator);
+builder.Services.AddJwtValidator<JwtValidatorSigningCredentialsCreationStrategy>(Constants.AppSettingsKeys.JwtValidator);
+builder.Services.AddJwtAuthentication();
 
 // Middlewares
 WebApplication app = builder.Build();
