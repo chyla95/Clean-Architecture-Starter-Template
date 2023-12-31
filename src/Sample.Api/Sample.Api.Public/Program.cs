@@ -3,7 +3,6 @@ using Sample.Api.Authentication.Jwt.Extensions.DependencyInjection;
 using Sample.Api.Authentication.Jwt.Strategies;
 using Sample.Api.Common.Extensions.DependencyInjection;
 using Sample.Api.Common.Strategies;
-using Sample.Api.Public;
 using Sample.Architecture.Application.Extensions.DependencyInjection;
 using Sample.Architecture.Infrastructure.Extensions.DependencyInjection;
 
@@ -29,8 +28,8 @@ builder.Services.AddInfrastructureLayer();
 builder.Services.AddAccessors();
 
 // Services from Sample.Api.Authentication.Jwt
-builder.Services.AddJwtGenerator<JwtGeneratorSigningCredentialsCreationStrategy>(Constants.AppSettingsKeys.JwtGenerator);
-builder.Services.AddJwtValidator<JwtValidatorSigningCredentialsCreationStrategy>(Constants.AppSettingsKeys.JwtValidator);
+builder.Services.AddJwtGenerator<JwtGeneratorSigningCredentialsCreationStrategy>();
+builder.Services.AddJwtValidator<JwtValidatorSigningCredentialsCreationStrategy>();
 builder.Services.AddJwtAuthentication();
 
 // Middlewares
