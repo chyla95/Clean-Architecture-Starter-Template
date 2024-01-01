@@ -6,12 +6,12 @@ using Sample.Architecture.Application.Utilities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Sample.Api.Authentication.Jwt.Services;
-internal sealed class JwtGeneratorService(
+namespace Sample.Api.Authentication.Jwt.Utilities;
+internal sealed class JwtGeneratorUtility(
     IJwtGeneratorSigningCredentialsCreationStrategy jwtGeneratorSigningCredentialsCreationStrategy,
     IOptionsMonitor<JwtGeneratorOptions> jwtGeneratorOptionsMonitor,
     ITimeUtility timeUtility
-    ) : IJwtGeneratorService
+    ) : IJwtGeneratorUtility
 {
     private readonly IOptionsMonitor<JwtGeneratorOptions> _getGeneratorOptions = jwtGeneratorOptionsMonitor;
     private readonly IJwtGeneratorSigningCredentialsCreationStrategy _jwtGeneratorSigningCredentialsCreationStrategy = jwtGeneratorSigningCredentialsCreationStrategy;

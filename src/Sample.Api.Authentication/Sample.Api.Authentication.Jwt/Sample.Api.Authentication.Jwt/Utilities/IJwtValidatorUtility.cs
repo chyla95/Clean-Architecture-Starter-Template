@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 
-namespace Sample.Api.Authentication.Jwt.Services;
-public interface IJwtValidatorService
+namespace Sample.Api.Authentication.Jwt.Utilities;
+public interface IJwtValidatorUtility
 {
     /// <summary>
     /// Checks is the token is valid.

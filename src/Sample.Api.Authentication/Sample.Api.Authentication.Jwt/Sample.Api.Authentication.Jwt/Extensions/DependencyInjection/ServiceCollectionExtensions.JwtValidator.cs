@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sample.Api.Authentication.Jwt.Constants;
 using Sample.Api.Authentication.Jwt.Options;
-using Sample.Api.Authentication.Jwt.Services;
+using Sample.Api.Authentication.Jwt.Utilities;
 using Sample.Api.Authentication.Jwt.Strategies;
 
 namespace Sample.Api.Authentication.Jwt.Extensions.DependencyInjection;
@@ -12,7 +12,7 @@ public static partial class ServiceCollectionExtensions
     {
         services.AddOptions<JwtValidatorOptions>().BindConfiguration(DefaultAppSettingsKeys.JwtValidator);
         services.AddScoped<IJwtValidatorSigningCredentialsCreationStrategy, TSigningCredentialsCreationStrategy>();
-        services.AddScoped<IJwtValidatorService, JwtValidatorService>();
+        services.AddScoped<IJwtValidatorUtility, JwtValidatorUtility>();
 
         return services;
     }

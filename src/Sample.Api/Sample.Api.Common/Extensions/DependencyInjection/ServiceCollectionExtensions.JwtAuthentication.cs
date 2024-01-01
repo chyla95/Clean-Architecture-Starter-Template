@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Sample.Api.Authentication.Jwt.Services;
+using Sample.Api.Authentication.Jwt.Utilities;
 
 namespace Sample.Api.Common.Extensions.DependencyInjection;
 public static partial class ServiceCollectionExtensions
@@ -9,7 +9,7 @@ public static partial class ServiceCollectionExtensions
     public static IServiceCollection AddJwtAuthentication(this IServiceCollection services)
     {
         IServiceProvider serviceProvider = services.BuildServiceProvider();
-        IJwtValidatorService jwtValidatorService = serviceProvider.GetRequiredService<IJwtValidatorService>();
+        IJwtValidatorUtility jwtValidatorService = serviceProvider.GetRequiredService<IJwtValidatorUtility>();
 
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

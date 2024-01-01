@@ -5,11 +5,11 @@ using Sample.Api.Authentication.Jwt.Strategies;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 
-namespace Sample.Api.Authentication.Jwt.Services;
-internal sealed class JwtValidatorService(
+namespace Sample.Api.Authentication.Jwt.Utilities;
+internal sealed class JwtValidatorUtility(
     IJwtValidatorSigningCredentialsCreationStrategy jwtValidatorSigningCredentialsCreationStrategy,
     IOptionsMonitor<JwtValidatorOptions> jwtValidatorOptionsMonitor
-    ) : IJwtValidatorService
+    ) : IJwtValidatorUtility
 {
     private readonly IJwtValidatorSigningCredentialsCreationStrategy _jwtValidatorSigningCredentialsCreationStrategy = jwtValidatorSigningCredentialsCreationStrategy;
     private readonly IOptionsMonitor<JwtValidatorOptions> _jwtValidatorOptionsMonitor = jwtValidatorOptionsMonitor;
