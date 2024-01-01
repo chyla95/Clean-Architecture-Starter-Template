@@ -14,6 +14,9 @@ public static partial class ServiceCollectionExtensions
         services.AddScoped<IJwtValidatorSigningCredentialsCreationStrategy, TSigningCredentialsCreationStrategy>();
         services.AddScoped<IJwtValidatorUtility, JwtValidatorUtility>();
 
+        // Other
+        services.AddTransient<IJwtClaimsUtility, JwtClaimsUtility>();
+
         return services;
     }
 }
