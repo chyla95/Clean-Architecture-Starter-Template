@@ -20,11 +20,23 @@ internal sealed class JwtValidatorService(
         if (!jwtSecurityTokenHandler.CanValidateToken) throw new InvalidOperationException("JwtSecurityTokenHandler cannot validate tokens in its current state.");
 
         TokenValidationParameters tokenValidationParameters = await GenerateTokenValidationParametersAsync(cancellationToken);
-        TokenValidationResult tokenValidationResult = await jwtSecurityTokenHandler.ValidateTokenAsync(token, tokenValidationParameters);        
+        TokenValidationResult tokenValidationResult = await jwtSecurityTokenHandler.ValidateTokenAsync(token, tokenValidationParameters);
+
         bool isTokenValid = tokenValidationResult.IsValid;
+        return isTokenValid;
+    }
 
-        // if (tokenValidationResult.Exception is not null) throw tokenValidationResult.Exception;
+    public async Task<bool> CanTokenBeRefreshedAsync(string token, CancellationToken cancellationToken = default)
+    {
+        JwtSecurityTokenHandler jwtSecurityTokenHandler = new();
+        if (!jwtSecurityTokenHandler.CanValidateToken) throw new InvalidOperationException("JwtSecurityTokenHandler cannot validate tokens in its current state.");
 
+        TokenValidationParameters tokenValidationParameters = await GenerateTokenValidationParametersAsync(cancellationToken);
+        tokenValidationParameters.ValidateLifetime = false;
+
+        TokenValidationResult tokenValidationResult = await jwtSecurityTokenHandler.ValidateTokenAsync(token, tokenValidationParameters);
+
+        bool isTokenValid = tokenValidationResult.IsValid;
         return isTokenValid;
     }
 
@@ -34,7 +46,6 @@ internal sealed class JwtValidatorService(
         RSAParameters rsaParameters = GetRSAParameters(signingCredentials);
 
         JwtValidatorOptions jwtGeneratorOptions = _jwtValidatorOptionsMonitor.CurrentValue;
-
         TokenValidationParameters tokenValidationParameters = new()
         {
             IssuerSigningKey = new RsaSecurityKey(rsaParameters),
