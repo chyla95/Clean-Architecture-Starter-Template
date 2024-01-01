@@ -1,10 +1,11 @@
-using System.Reflection;
+using Sample.Api.Authentication.Common.Extensions.DependencyInjection;
 using Sample.Api.Authentication.Jwt.Extensions.DependencyInjection;
 using Sample.Api.Authentication.Jwt.Strategies;
 using Sample.Api.Common.Extensions.DependencyInjection;
 using Sample.Api.Common.Strategies;
 using Sample.Architecture.Application.Extensions.DependencyInjection;
 using Sample.Architecture.Infrastructure.Extensions.DependencyInjection;
+using System.Reflection;
 
 Assembly callingAssembly = Assembly.GetCallingAssembly();
 
@@ -26,6 +27,10 @@ builder.Services.AddInfrastructureLayer();
 
 // Services from Sample.Api.Common
 builder.Services.AddAccessors();
+
+
+// Services from Sample.Api.Authentication.Common
+builder.Services.AddAuthenticationTools();
 
 // Services from Sample.Api.Authentication.Jwt
 builder.Services.AddJwtGenerator<JwtGeneratorSigningCredentialsCreationStrategy>();
