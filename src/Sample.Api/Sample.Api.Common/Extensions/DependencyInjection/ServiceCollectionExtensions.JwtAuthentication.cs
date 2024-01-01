@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Sample.Api.Authentication.Jwt.Services;
 
-namespace Sample.Api.Authentication.Jwt.Extensions.DependencyInjection;
+namespace Sample.Api.Common.Extensions.DependencyInjection;
 public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddJwtAuthentication(this IServiceCollection services)
     {
         IServiceProvider serviceProvider = services.BuildServiceProvider();
-        IJwtValidatorService jwtValidatorSigningCredentialsCreationStrategy = serviceProvider.GetRequiredService<IJwtValidatorService>();
+        IJwtValidatorService jwtValidatorService = serviceProvider.GetRequiredService<IJwtValidatorService>();
 
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -18,11 +19,11 @@ public static partial class ServiceCollectionExtensions
                 {
                     OnMessageReceived = async (messageReceivedContext) =>
                     {
-                        messageReceivedContext.Options.TokenValidationParameters = await jwtValidatorSigningCredentialsCreationStrategy.GenerateTokenValidationParametersAsync();
+                        TokenValidationParameters tokenValidationParameters = await jwtValidatorService.GenerateTokenValidationParametersAsync();
+                        messageReceivedContext.Options.TokenValidationParameters = tokenValidationParameters;
                     }
                 };
             });
-
 
         return services;
     }
