@@ -11,7 +11,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Sample.Api.Authentication\Sample.Api.Authentication.Jwt\Sample.Api.Authentication.Jwt\Sample.Api.Authentication.Jwt.csproj" />
+	  <ProjectReference Include="..\..\Sample.Api.Authentication\Sample.Api.Authentication.Jwt\Sample.Api.Authentication.Jwt.csproj" />
 	  <ProjectReference Include="..\..\Sample.Architecture\Sample.Architecture.Application\Sample.Architecture.Application.csproj" />
 	</ItemGroup>
 	
