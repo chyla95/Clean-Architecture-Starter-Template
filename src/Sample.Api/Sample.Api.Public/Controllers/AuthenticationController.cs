@@ -1,26 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Sample.Api.Authentication.Jwt.Services;
+﻿using Microsoft.AspNetCore.Mvc;
+using Sample.Api.Common.Accessors;
 
 namespace Sample.Api.Public.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public class AuthenticationController(IJwtValidatorService jwtValidatorService, IJwtGeneratorService jwtGeneratorService) : ControllerBase
+public class AuthenticationController(IContextAccessor contextAccessor) : ControllerBase
 {
-    [HttpGet]
-    public async Task<ActionResult<bool>> Get(CancellationToken cancellationToken)
-    {
-        var token = await jwtGeneratorService.GenerateTokenAsync("123", cancellationToken);
-        var isTokenValid = await jwtValidatorService.IsTokenValidAsync(token, cancellationToken);
-        var canTokenBeRefreshed = await jwtValidatorService.CanTokenBeRefreshedAsync(token, cancellationToken);
+    private readonly IContextAccessor _contextAccessor = contextAccessor;
 
-        return Ok(token);
-    }
+    [HttpPost("SignUp")]
+    public async Task<ActionResult> SignUp() => throw new NotImplementedException();
 
-    [Authorize]
-    [HttpGet("NeedAuth")]
-    public ActionResult<bool> Get2()
-    {
-        return Ok(true);
-    }
+    [HttpPost("SignIn")]
+    public async Task<ActionResult> SignIn() => throw new NotImplementedException();
+
+    [HttpPost("Refresh")]
+    public async Task<ActionResult> Refresh() => throw new NotImplementedException();
+
+    [HttpPost("SignOut")]
+    public async Task<ActionResult> SignOut() => throw new NotImplementedException();
 }
