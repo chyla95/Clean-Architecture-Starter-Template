@@ -1,6 +1,14 @@
+
 # Clean Architecture Starter Template (.NET)
 
 This repository contains a starter template for building applications using Clean Architecture principles in ASP.NET.
+
+## Functionalities
+
+ - ✅ Authentication
+ - ✅ Options pattern
+ - 🔧 Repository pattern - WiP [@repository](https://github.com/chyla95/Clean-Architecture-Starter-Template/tree/repository) branch
+ - ❌ Result pattern based exception handling
 
 ## Generating Keys with OpenSSL
 
