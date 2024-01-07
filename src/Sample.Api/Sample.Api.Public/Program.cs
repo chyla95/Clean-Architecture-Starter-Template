@@ -24,6 +24,7 @@ builder.Services.AddApplicationLayer();
 
 // Services from Sample.Architecture.Infrastructure
 builder.Services.AddInfrastructureLayer();
+builder.Services.AddDataAccess();
 
 // Services from Sample.Api.Common
 builder.Services.AddAccessors();

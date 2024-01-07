@@ -9,14 +9,14 @@ public class AuthenticationController(IContextAccessor contextAccessor) : Contro
     private readonly IContextAccessor _contextAccessor = contextAccessor;
 
     [HttpPost("SignUp")]
-    public async Task<ActionResult> SignUp() => throw new NotImplementedException();
+    public Task<ActionResult> SignUpUser() => throw new NotImplementedException();
 
     [HttpPost("SignIn")]
-    public async Task<ActionResult> SignIn() => throw new NotImplementedException();
+    public Task<ActionResult> SignInUser() => throw new NotImplementedException();
 
     [HttpPost("Refresh")]
-    public async Task<ActionResult> Refresh() => throw new NotImplementedException();
+    public Task<ActionResult> RefreshUser() => throw new NotImplementedException();
 
     [HttpPost("SignOut")]
-    public async Task<ActionResult> SignOut() => throw new NotImplementedException();
+    public Task<ActionResult> SignOutUser() => throw new NotImplementedException();
 }
