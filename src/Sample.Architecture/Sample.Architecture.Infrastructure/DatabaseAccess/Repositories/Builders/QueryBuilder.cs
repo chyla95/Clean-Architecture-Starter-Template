@@ -4,10 +4,10 @@ using Sample.Architecture.Domain.Entities;
 using System.Linq.Expressions;
 
 namespace Sample.Architecture.Infrastructure.DatabaseAccess.Repositories.Builders;
-internal sealed class QueryBuilder<TEntity>(IQueryable<TEntity> querable) : IQueryBuilder<TEntity>
+internal class QueryBuilder<TEntity>(IQueryable<TEntity> querable) : IQueryBuilder<TEntity>
     where TEntity : Entity
 {
-    private IQueryable<TEntity> _querable = querable;
+    protected IQueryable<TEntity> _querable = querable;
 
     public IQueryBuilder<TEntity> Where(Expression<Func<TEntity, bool>> wherePredicate)
     {

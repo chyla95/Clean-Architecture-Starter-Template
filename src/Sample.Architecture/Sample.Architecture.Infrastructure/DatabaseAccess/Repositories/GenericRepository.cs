@@ -8,7 +8,7 @@ namespace Sample.Architecture.Infrastructure.DatabaseAccess.Repositories;
 internal abstract class GenericRepository<TEntity>(DataContext dataContext) : Repository<TEntity>(dataContext), IGenericRepository<TEntity>
     where TEntity : Entity
 {
-    public IQueryBuilder<TEntity> QueryBuilder => new QueryBuilder<TEntity>(Queryable);
+    public IIncludableQueryBuilder<TEntity> QueryBuilder => new IncludableQueryBuilder<TEntity>(Queryable);
 
     public virtual Task<TEntity?> GetSingleByIdAsync(int id, CancellationToken cancellationToken = default) 
         => Queryable.SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
