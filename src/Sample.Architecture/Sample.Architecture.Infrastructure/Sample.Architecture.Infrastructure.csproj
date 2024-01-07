@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Sample.Architecture.Domain\Sample.Architecture.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DatabaseAccess\Migrations\" />
+  </ItemGroup>
+
 </Project>
