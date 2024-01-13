@@ -12,6 +12,12 @@ public interface IQueryBuilder<TEntity>
     IQueryBuilder<TEntity> OrderByAsc<TPropertyToOrderBy>(Expression<Func<TEntity, TPropertyToOrderBy>> orderBy);
     IQueryBuilder<TEntity> OrderByDesc<TPropertyToOrderBy>(Expression<Func<TEntity, TPropertyToOrderBy>> orderBy);
 
+    IIncludableQueryBuilder<TEntity, TPropertyToInclude> Include<TPropertyToInclude>(Expression<Func<TEntity, IEnumerable<TPropertyToInclude>>> include)
+        where TPropertyToInclude : Entity;
+
+    public IIncludableQueryBuilder<TEntity, TPropertyToInclude> Include<TPropertyToInclude>(Expression<Func<TEntity, TPropertyToInclude?>> include)
+        where TPropertyToInclude : Entity;
+
     Task<TEntity> GetSingleAsync(CancellationToken cancellationToken = default);
     Task<TEntity?> GetSingleOrDefaultAsync(CancellationToken cancellationToken = default);
     Task<IEnumerable<TEntity>> GetManyAsync(CancellationToken cancellationToken = default);

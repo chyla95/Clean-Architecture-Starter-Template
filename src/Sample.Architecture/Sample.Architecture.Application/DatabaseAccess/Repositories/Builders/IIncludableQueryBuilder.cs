@@ -2,12 +2,13 @@
 using System.Linq.Expressions;
 
 namespace Sample.Architecture.Application.DatabaseAccess.Repositories.Builders;
-public interface IIncludableQueryBuilder<TEntity> : IQueryBuilder<TEntity>
+public interface IIncludableQueryBuilder<TEntity, TPreviouslyIncludedProperty> : IQueryBuilder<TEntity>
     where TEntity : Entity
+    where TPreviouslyIncludedProperty : Entity
 {
-    IThenIncludableQueryBuilder<TEntity, TPropertyToInclude> Include<TPropertyToInclude>(Expression<Func<TEntity, IEnumerable<TPropertyToInclude>>> include)
+    IIncludableQueryBuilder<TEntity, TPropertyToInclude> ThenInclude<TPropertyToInclude>(Expression<Func<TPreviouslyIncludedProperty, TPropertyToInclude?>> include)
         where TPropertyToInclude : Entity;
 
-    public IThenIncludableQueryBuilder<TEntity, TPropertyToInclude> Include<TPropertyToInclude>(Expression<Func<TEntity, TPropertyToInclude?>> include)
+    IIncludableQueryBuilder<TEntity, TPropertyToInclude> ThenInclude<TPropertyToInclude>(Expression<Func<TPreviouslyIncludedProperty, IEnumerable<TPropertyToInclude>>> include)
         where TPropertyToInclude : Entity;
 }

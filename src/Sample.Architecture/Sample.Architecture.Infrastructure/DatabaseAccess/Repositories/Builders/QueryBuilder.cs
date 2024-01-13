@@ -47,6 +47,20 @@ internal class QueryBuilder<TEntity>(IQueryable<TEntity> querable) : IQueryBuild
         return this;
     }
 
+    public IIncludableQueryBuilder<TEntity, TPropertyToInclude> Include<TPropertyToInclude>(Expression<Func<TEntity, IEnumerable<TPropertyToInclude>>> include)
+        where TPropertyToInclude : Entity
+    {
+        _querable = _querable.Include(include);
+        return new IncludableQueryBuilder<TEntity, TPropertyToInclude>(_querable);
+    }
+
+    public IIncludableQueryBuilder<TEntity, TPropertyToInclude> Include<TPropertyToInclude>(Expression<Func<TEntity, TPropertyToInclude?>> include)
+        where TPropertyToInclude : Entity
+    {
+        _querable = _querable.Include(include);
+        return new IncludableQueryBuilder<TEntity, TPropertyToInclude>(_querable);
+    }
+
     public Task<TEntity> GetSingleAsync(CancellationToken cancellationToken = default)
     {
         Task<TEntity> entity = _querable.SingleAsync(cancellationToken);

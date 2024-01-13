@@ -5,7 +5,7 @@ namespace Sample.Architecture.Application.DatabaseAccess.Repositories;
 public interface IGenericRepository<TEntity>
     where TEntity : Entity
 {
-    IIncludableQueryBuilder<TEntity> QueryBuilder { get; }
+    IQueryBuilder<TEntity> QueryBuilder { get; }
 
     Task<TEntity?> GetSingleByIdAsync(int id, CancellationToken cancellationToken = default);
 }
