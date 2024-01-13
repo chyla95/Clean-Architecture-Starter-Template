@@ -10,7 +10,7 @@ public static partial class ServiceCollectionExtensions
     public static IServiceCollection AddJwtGenerator<TSigningCredentialsCreationStrategy>(this IServiceCollection services)
         where TSigningCredentialsCreationStrategy : class, IJwtGeneratorSigningCredentialsCreationStrategy
     {
-        services.AddOptions<JwtGeneratorOptions>().BindConfiguration(DefaultAppSettingsKeys.JwtGenerator);
+        services.AddOptions<JwtGeneratorOptions>().BindConfiguration(AppSettingsKeyConstants.JwtGenerator);
         services.AddScoped<IJwtGeneratorSigningCredentialsCreationStrategy, TSigningCredentialsCreationStrategy>();
         services.AddScoped<IJwtGeneratorUtility, JwtGeneratorUtility>();
 
