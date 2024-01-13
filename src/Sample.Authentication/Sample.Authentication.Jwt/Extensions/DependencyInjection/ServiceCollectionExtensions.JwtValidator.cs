@@ -10,7 +10,7 @@ public static partial class ServiceCollectionExtensions
     public static IServiceCollection AddJwtValidator<TSigningCredentialsCreationStrategy>(this IServiceCollection services)
         where TSigningCredentialsCreationStrategy : class, IJwtValidatorSigningCredentialsCreationStrategy
     {
-        services.AddOptions<JwtValidatorOptions>().BindConfiguration(DefaultAppSettingsKeys.JwtValidator);
+        services.AddOptions<JwtValidatorOptions>().BindConfiguration(AppSettingsKeyConstants.JwtValidator);
         services.AddScoped<IJwtValidatorSigningCredentialsCreationStrategy, TSigningCredentialsCreationStrategy>();
         services.AddScoped<IJwtValidatorUtility, JwtValidatorUtility>();
 
