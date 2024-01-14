@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Sample.Architecture.Infrastructure.DataStorage.Extensions.DependencyInjection;
+using Sample.Architecture.Infrastructure.DataStorage.Options;
 using System.CommandLine.Builder;
 using System.CommandLine.Hosting;
 using System.CommandLine.Parsing;
@@ -14,8 +17,8 @@ commandLineBuilder
         {
             hostBuilder.ConfigureServices((builder, services) =>
             {
-                //services.AddOptions<DatabaseAccessOptions>().BindConfiguration("DatabaseAccess");
-                //services.AddDataAccess();
+                services.AddOptions<DatabaseAccessOptions>().BindConfiguration("DatabaseAccess");
+                services.AddDataStorage();
             });
         });
 

@@ -17,8 +17,9 @@ public interface IGenericRepository<TEntity, TId>
     Task<Page<TEntity, TId>> GetPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
     Task<Page<TEntity, TId>> GetPageAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 
-    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
+    Task<int> CountAsync(CancellationToken cancellationToken = default);
     Task<int> CountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
+    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 
     // Commands
     void Add(TEntity entity);

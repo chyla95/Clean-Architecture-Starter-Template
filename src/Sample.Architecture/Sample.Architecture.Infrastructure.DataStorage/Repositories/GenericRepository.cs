@@ -75,14 +75,19 @@ internal abstract class GenericRepository<TEntity, TId>(DataContext dataContext)
         return new Page<TEntity, TId>(pagedEntities, pageNumber, totalPagesCount, hasPreviousPage, hasNextPage);
     }
 
-    public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+    public Task<int> CountAsync(CancellationToken cancellationToken = default)
     {
-        return Queryable.AnyAsync(filter, cancellationToken);
+        return Queryable.CountAsync(cancellationToken);
     }
 
     public Task<int> CountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
     {
         return Queryable.CountAsync(filter, cancellationToken);
+    }
+
+    public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+    {
+        return Queryable.AnyAsync(filter, cancellationToken);
     }
 
     public void Add(TEntity entity) => DbSet.Add(entity);

@@ -19,3 +19,7 @@ internal sealed class DataContext(DbContextOptions<DataContext> dbContextOptions
         modelBuilder.HasDefaultSchema(_databaseAccessOptions.Value.SchemaName);
     }
 }
+
+// cd .\src\Sample.Architecture\Sample.Architecture.Infrastructure.DataStorage\
+// dotnet ef migrations add AddUserModel -o .\Migrations\ -s ..\..\Sample.Application\Sample.Application.ConsoleApp\Sample.Application.ConsoleApp.DeploymentTools\
+// dotnet ef database update -s ..\..\Sample.Application\Sample.Application.ConsoleApp\Sample.Application.ConsoleApp.DeploymentTools\
