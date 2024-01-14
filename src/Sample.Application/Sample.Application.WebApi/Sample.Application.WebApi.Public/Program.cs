@@ -1,10 +1,11 @@
-using Sample.Authentication.Common.Extensions.DependencyInjection;
-using Sample.Authentication.Jwt.Extensions.DependencyInjection;
-using Sample.Authentication.Jwt.Strategies;
 using Sample.Application.WebApi.Common.Extensions.DependencyInjection;
 using Sample.Application.WebApi.Common.Strategies;
 using Sample.Architecture.Application.Extensions.DependencyInjection;
+using Sample.Architecture.Infrastructure.DataStorage.Extensions.DependencyInjection;
 using Sample.Architecture.Infrastructure.Extensions.DependencyInjection;
+using Sample.Authentication.Common.Extensions.DependencyInjection;
+using Sample.Authentication.Jwt.Extensions.DependencyInjection;
+using Sample.Authentication.Jwt.Strategies;
 using System.Reflection;
 
 Assembly callingAssembly = Assembly.GetCallingAssembly();
@@ -25,9 +26,11 @@ builder.Services.AddApplicationLayer();
 // Services from Sample.Architecture.Infrastructure
 builder.Services.AddInfrastructureLayer();
 
+// Services from Sample.Architecture.Infrastructure.DataStorage
+builder.Services.AddDataStorage();
+
 // Services from Sample.Application.WebApi.Common
 builder.Services.AddAccessors();
-
 
 // Services from Sample.Authentication.Common
 builder.Services.AddAuthenticationTools();

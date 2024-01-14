@@ -1,5 +1,6 @@
 ﻿namespace Sample.Architecture.Domain.Entities;
-public abstract class Entity
+public abstract class Entity<TId>
+    where TId : struct
 {
-    public int Id { get; set; }
+    public Key<TId>? Id { get; set; }
 }
