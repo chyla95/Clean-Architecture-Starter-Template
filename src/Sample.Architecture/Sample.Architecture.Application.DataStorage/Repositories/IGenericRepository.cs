@@ -14,8 +14,8 @@ public interface IGenericRepository<TEntity, TId>
     Task<IEnumerable<TEntity>> GetManyAsync(IEnumerable<TId> ids, CancellationToken cancellationToken = default);
     Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 
-    Task<Page<TEntity, TId>> GetPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
-    Task<Page<TEntity, TId>> GetPageAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
+    Task<PageModel<TEntity, TId>> GetPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default);
+    Task<PageModel<TEntity, TId>> GetPageAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);
 
     Task<int> CountAsync(CancellationToken cancellationToken = default);
     Task<int> CountAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default);

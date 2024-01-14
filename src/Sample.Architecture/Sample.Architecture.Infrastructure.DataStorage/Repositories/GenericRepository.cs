@@ -34,7 +34,7 @@ internal abstract class GenericRepository<TEntity, TId>(DataContext dataContext)
         return await Queryable.Where(filter).ToListAsync(cancellationToken);
     }
 
-    public async Task<Page<TEntity, TId>> GetPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
+    public async Task<PageModel<TEntity, TId>> GetPageAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
     {
         if (pageNumber < 1) throw new ArgumentException("Page number must be greater than 0.", nameof(pageNumber));
         if (pageSize < 1) throw new ArgumentException("Page size must be greater than 0.", nameof(pageSize));
@@ -51,10 +51,10 @@ internal abstract class GenericRepository<TEntity, TId>(DataContext dataContext)
         bool hasPreviousPage = pageNumber > 1;
         bool hasNextPage = pageNumber < totalPagesCount;
 
-        return new Page<TEntity, TId>(pagedEntities, pageNumber, totalPagesCount, hasPreviousPage, hasNextPage);
+        return new PageModel<TEntity, TId>(pagedEntities, pageNumber, totalPagesCount, hasPreviousPage, hasNextPage);
     }
 
-    public async Task<Page<TEntity, TId>> GetPageAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
+    public async Task<PageModel<TEntity, TId>> GetPageAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
     {
         if (pageNumber < 1) throw new ArgumentException("Page number must be greater than 0.", nameof(pageNumber));
         if (pageSize < 1) throw new ArgumentException("Page size must be greater than 0.", nameof(pageSize));
@@ -72,7 +72,7 @@ internal abstract class GenericRepository<TEntity, TId>(DataContext dataContext)
         bool hasPreviousPage = pageNumber > 1;
         bool hasNextPage = pageNumber < totalPagesCount;
 
-        return new Page<TEntity, TId>(pagedEntities, pageNumber, totalPagesCount, hasPreviousPage, hasNextPage);
+        return new PageModel<TEntity, TId>(pagedEntities, pageNumber, totalPagesCount, hasPreviousPage, hasNextPage);
     }
 
     public Task<int> CountAsync(CancellationToken cancellationToken = default)
