@@ -11,7 +11,7 @@ internal abstract class GenericRepository<TEntity, TId>(DataContext dataContext)
 {
     public Task<TEntity?> GetSingleAsync(TId id, CancellationToken cancellationToken = default)
     {
-        return Queryable.SingleOrDefaultAsync(e => e.Id == id, cancellationToken);
+        return Queryable.SingleOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
     }
 
     public Task<TEntity?> GetSingleAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)
@@ -26,7 +26,7 @@ internal abstract class GenericRepository<TEntity, TId>(DataContext dataContext)
 
     public async Task<IEnumerable<TEntity>> GetManyAsync(IEnumerable<TId> ids, CancellationToken cancellationToken = default)
     {
-        return await Queryable.Where(e => ids.Contains(e.Id!)).ToListAsync(cancellationToken);
+        return await Queryable.Where(e => ids.Contains(e.Id)).ToListAsync(cancellationToken);
     }
 
     public async Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> filter, CancellationToken cancellationToken = default)

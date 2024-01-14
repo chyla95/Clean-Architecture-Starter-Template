@@ -1,6 +1,6 @@
-﻿using Sample.Architecture.Domain.Entities;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using Sample.Architecture.Application.DataStorage.Models;
+using Sample.Architecture.Domain.Entities;
 namespace Sample.Architecture.Application.DataStorage.Repositories;
 public interface IGenericRepository<TEntity, TId>
     where TId : struct
