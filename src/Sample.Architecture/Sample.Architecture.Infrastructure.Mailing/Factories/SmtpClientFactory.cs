@@ -1,65 +1,79 @@
-﻿using MailKit.Net.Smtp;
-using MailKit.Security;
-using Microsoft.Extensions.Options;
-using Sample.Architecture.Application.Mailing.Enums;
+﻿using Microsoft.Extensions.Options;
 using Sample.Architecture.Application.Mailing.Options;
-using System.Net;
-
+using Sample.Architecture.Infrastructure.Mailing.Wrappers;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Sample.Architecture.Infrastructure.Mailing.Factories;
-internal sealed class SmtpClientFactory(ISmtpClient smtpClient, IOptionsMonitor<SmtpClientOptions> smtpClientOptionsMonitor) : IAsyncDisposable
+internal sealed class SmtpClientFactory(IOptionsMonitor<MailingSenderOptions> smtpClientOptionsMonitor) : IDisposable
 {
     private bool _isDisposed = false;
+    private bool _isDisposing = false;
 
-    private readonly IOptionsMonitor<SmtpClientOptions> _smtpClientOptionsMonitor = smtpClientOptionsMonitor;
-    private readonly ISmtpClient _smtpClient = smtpClient;
+    private readonly IOptionsMonitor<MailingSenderOptions> _smtpClientOptionsMonitor = smtpClientOptionsMonitor;
+    private readonly HashSet<IRichSmtpClient> _smtpClients = new(new RichSmtpClientEqualityComparer());
 
-    public async Task<ISmtpClient> GetSmtpClientAsync(CancellationToken cancellationToken = default)
+    public async Task<IRichSmtpClient> GetSmtpClientAsync(CancellationToken cancellationToken = default)
     {
-        ObjectDisposedException.ThrowIf(_isDisposed, nameof(SmtpClientFactory));
+        IRichSmtpClient? smtpClient = _smtpClients.SingleOrDefault(sc => sc.IsDefault == true);
+        if (smtpClient is not null) return smtpClient;
 
-        SmtpClientOptions smtpClientOptions = _smtpClientOptionsMonitor.CurrentValue;
+        DefaultMailingSenderOptions mailingSenderOptions = _smtpClientOptionsMonitor.CurrentValue.DefaultMailingSender;
+        smtpClient = await CreateSmtpClientAsync(mailingSenderOptions, null, cancellationToken);
 
-        // Some Antiviruses may cause problems with "certificate revocation",
-        // to bypass this, set "CheckCertificateRevocation" to "false", like follows:
-        // _smtpClient.CheckCertificateRevocation = false;
+        bool isSmtpClientAdded = _smtpClients.Add(smtpClient);
+        if (!isSmtpClientAdded) throw new InvalidOperationException($"Could not add {nameof(smtpClient)} to {nameof(_smtpClients)} collection");
 
-        SecureSocketOptions secureSocketOptions = smtpClientOptions.EncryptionType switch
-        {
-            MailEncryptionType.None => SecureSocketOptions.None,
-            MailEncryptionType.OpportunisticTls => SecureSocketOptions.StartTls,
-            MailEncryptionType.ForcedTls => SecureSocketOptions.SslOnConnect,
-            _ => throw new InvalidOperationException($"Unsupported {nameof(MailEncryptionType)}")
-        };
-
-        await _smtpClient.ConnectAsync(
-            smtpClientOptions.HostAddress,
-            smtpClientOptions.PortNumber,
-            secureSocketOptions,
-            cancellationToken
-            );
-
-        if (!string.IsNullOrWhiteSpace(smtpClientOptions.Password) || !string.IsNullOrWhiteSpace(smtpClientOptions.Username))
-        {
-            ICredentials credentials = new NetworkCredential
-            {
-                UserName = smtpClientOptions.Username,
-                Password = smtpClientOptions.Password
-            };
-
-            await _smtpClient.AuthenticateAsync(credentials, cancellationToken);
-        }
-
-        return _smtpClient;
+        return smtpClient;
     }
 
-    public async ValueTask DisposeAsync()
+    public async Task<IRichSmtpClient> GetSmtpClientAsync(string smtpClientName, CancellationToken cancellationToken = default)
     {
-        if (_isDisposed) return;
+        IRichSmtpClient? smtpClient = _smtpClients.SingleOrDefault(sc => sc.Name == smtpClientName);
+        if (smtpClient is not null) return smtpClient;
 
-        await _smtpClient.DisconnectAsync(true);
+        IEnumerable<NamedMailingSendersOptions> mailingSendersOptions = _smtpClientOptionsMonitor.CurrentValue.NamedMailingSenders;
+        NamedMailingSendersOptions? mailingSenderOptions = mailingSendersOptions.SingleOrDefault(mso => mso.Name == smtpClientName);
+        if (mailingSenderOptions is null) throw new NullReferenceException($"There is no matching configuration for '{smtpClientName}' SMTP Client");
 
-        _smtpClient.Dispose();
+        smtpClient = await CreateSmtpClientAsync(mailingSenderOptions, smtpClientName, cancellationToken);
+        bool isSmtpClientAdded = _smtpClients.Add(smtpClient);
+        if (!isSmtpClientAdded) throw new InvalidOperationException($"Could not add {nameof(smtpClient)} to {nameof(_smtpClients)} collection");
+
+        return smtpClient;
+    }
+
+    private static async Task<IRichSmtpClient> CreateSmtpClientAsync(DefaultMailingSenderOptions mailingSenderOptions, string? name = null, CancellationToken cancellationToken = default)
+    {
+        // Some Antiviruses may cause problems with "certificate revocation" for some SMTP servers,
+        // to bypass this, set "CheckCertificateRevocation" to "false", like follows:
+        // sessionSmtpClient.CheckCertificateRevocation = false;
+
+        RichSmtpClient sessionSmtpClient = name is not null ? new(name) : new();
+        await sessionSmtpClient.CreateSessionAsync(mailingSenderOptions, cancellationToken);
+
+        return sessionSmtpClient;
+    }
+
+    public void Dispose()
+    {
+        if (_isDisposed || _isDisposing) return;
+
+        _isDisposing = true;
+        foreach (IRichSmtpClient smtpClient in _smtpClients)
+        {
+            smtpClient.Dispose();
+        }
         _isDisposed = true;
+    }
+
+    private class RichSmtpClientEqualityComparer : IEqualityComparer<IRichSmtpClient>
+    {
+        public bool Equals(IRichSmtpClient? x, IRichSmtpClient? y)
+        {
+            if (ReferenceEquals(x, y)) return true;
+            return (x?.Name == y?.Name) && (x?.IsDefault == y?.IsDefault);
+        }
+
+        public int GetHashCode([DisallowNull] IRichSmtpClient obj) => HashCode.Combine(obj.Name, obj.IsDefault);
     }
 }

@@ -26,9 +26,8 @@ builder.Services.AddApplicationLayer();
 // Services from Sample.Architecture.Infrastructure
 builder.Services.AddInfrastructureLayer();
 
-// From ...
+// Services from Sample.Architecture.Infrastructure.Mailing
 builder.Services.AddMailing();
-
 
 // Services from Sample.Application.WebApi.Common
 builder.Services.AddAccessors();
