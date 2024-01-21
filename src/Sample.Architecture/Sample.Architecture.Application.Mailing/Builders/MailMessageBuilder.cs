@@ -16,7 +16,7 @@ public sealed class MailMessageBuilder
 
     public MailMessageBuilder SetBody(string value, MailBodyType mailContentType = MailBodyType.Text)
     {
-        if (!string.IsNullOrWhiteSpace(_mailMessage.Subject)) throw new InvalidOperationException($"Field: '{nameof(_mailMessage.Body)}' cannot be set twice");
+        if (_mailMessage.Body is not null) throw new InvalidOperationException($"Field: '{nameof(_mailMessage.Body)}' cannot be set twice");
 
         _mailMessage.Body = new MailBodyModel(value, mailContentType);
         return this;
