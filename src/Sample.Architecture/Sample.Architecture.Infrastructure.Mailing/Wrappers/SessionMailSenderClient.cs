@@ -5,11 +5,11 @@ using Sample.Architecture.Application.Mailing.Options;
 using System.Net;
 
 namespace Sample.Architecture.Infrastructure.Mailing.Wrappers;
-internal class SessionSmtpClient() : SmtpClient, ISessionSmtpClient
+internal class SessionMailSenderClient : SmtpClient, ISessionMailSenderClient
 {
-    private DefaultMailingSenderOptions? _sessionMailingSenderOptions;
+    private MailSenderClientOptions? _mailSenderClientOptions;
 
-    public async Task CreateSessionAsync(DefaultMailingSenderOptions mailingSenderOptions, CancellationToken cancellationToken = default)
+    public async Task CreateSessionAsync(MailSenderClientOptions mailingSenderOptions, CancellationToken cancellationToken = default)
     {
         SecureSocketOptions secureSocketOptions = ConfigureSecureSocketOptions(mailingSenderOptions.EncryptionType);
         await ConnectAsync(
@@ -25,31 +25,31 @@ internal class SessionSmtpClient() : SmtpClient, ISessionSmtpClient
         );
         if (credentials is not null) await AuthenticateAsync(credentials, cancellationToken);
 
-        _sessionMailingSenderOptions = mailingSenderOptions;
+        _mailSenderClientOptions = mailingSenderOptions;
     }
 
     public async Task RefreshSessionAsync(CancellationToken cancellationToken = default)
     {
-        if (_sessionMailingSenderOptions is null) throw new InvalidOperationException("Cannot refresh a non-existent session.");
+        if (_mailSenderClientOptions is null) throw new InvalidOperationException("Cannot refresh a non-existent session");
 
-        SecureSocketOptions secureSocketOptions = ConfigureSecureSocketOptions(_sessionMailingSenderOptions.EncryptionType);
+        SecureSocketOptions secureSocketOptions = ConfigureSecureSocketOptions(_mailSenderClientOptions.EncryptionType);
         await ConnectAsync(
-            _sessionMailingSenderOptions.HostAddress,
-            _sessionMailingSenderOptions.PortNumber,
+            _mailSenderClientOptions.HostAddress,
+            _mailSenderClientOptions.PortNumber,
             secureSocketOptions,
             cancellationToken
         );
 
         ICredentials? credentials = ConfigureCredentials(
-            _sessionMailingSenderOptions.Username,
-            _sessionMailingSenderOptions.Password
+            _mailSenderClientOptions.Username,
+            _mailSenderClientOptions.Password
         );
         if (credentials is not null) await AuthenticateAsync(credentials, cancellationToken);
     }
 
     public async Task ClearSessioAsync(CancellationToken cancellationToken = default)
     {
-        _sessionMailingSenderOptions = null;
+        _mailSenderClientOptions = null;
         await DisconnectAsync(true, cancellationToken);
     }
 
@@ -58,8 +58,8 @@ internal class SessionSmtpClient() : SmtpClient, ISessionSmtpClient
         SecureSocketOptions secureSocketOptions = mailEncryptionType switch
         {
             MailEncryptionType.None => SecureSocketOptions.None,
-            MailEncryptionType.OpportunisticTls => SecureSocketOptions.StartTls,
-            MailEncryptionType.ForcedTls => SecureSocketOptions.SslOnConnect,
+            MailEncryptionType.OptionalTls => SecureSocketOptions.StartTls,
+            MailEncryptionType.MandatoryTls => SecureSocketOptions.SslOnConnect,
             _ => throw new InvalidOperationException($"Unsupported {nameof(MailEncryptionType)}")
         };
 

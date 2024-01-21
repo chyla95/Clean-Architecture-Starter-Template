@@ -4,22 +4,22 @@ using Sample.Architecture.Infrastructure.Mailing.Factories;
 using Sample.Architecture.Infrastructure.Mailing.Wrappers;
 
 namespace Sample.Architecture.Infrastructure.Mailing.Utilities;
-internal sealed class MailSenderUtility(SmtpClientFactory smtpClientFactory) : IMailSenderUtility
+internal sealed class MailSenderUtility(IMailSenderClientFactory mailSenderClientFactory) : IMailSenderUtility
 {
-    private readonly SmtpClientFactory _smtpClientFactory = smtpClientFactory;
-    private readonly string? _mailSenderName;
+    private readonly IMailSenderClientFactory _mailSenderClientFactory = mailSenderClientFactory;
+    private readonly string? _mailSenderClientName;
 
-    public MailSenderUtility(SmtpClientFactory smtpClientFactory, string mailSenderName) : this(smtpClientFactory)
+    public MailSenderUtility(IMailSenderClientFactory smtpClientFactory, string mailSenderClientName) : this(smtpClientFactory)
     {
-        _mailSenderName = mailSenderName;
+        _mailSenderClientName = mailSenderClientName;
     }
 
     public async Task SendMessageAsync(MailMessageModel mailMessageModel, CancellationToken cancellationToken = default)
     {
-        IRichSmtpClient smtpClient = string.IsNullOrWhiteSpace(_mailSenderName)
-            ? await _smtpClientFactory.GetSmtpClientAsync(cancellationToken)
-            : await _smtpClientFactory.GetSmtpClientAsync(_mailSenderName, cancellationToken);
+        IEnrichedMailSenderClient mailSenderClient = string.IsNullOrWhiteSpace(_mailSenderClientName)
+            ? await _mailSenderClientFactory.GetMailSenderClientAsync(cancellationToken)
+            : await _mailSenderClientFactory.GetMailSenderClientAsync(_mailSenderClientName, cancellationToken);
 
-        await smtpClient.SendAsync(mailMessageModel, cancellationToken);
+        await mailSenderClient.SendAsync(mailMessageModel, cancellationToken);
     }
 }

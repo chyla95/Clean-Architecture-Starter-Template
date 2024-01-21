@@ -4,16 +4,17 @@ using Sample.Architecture.Application.Mailing.Enums;
 using Sample.Architecture.Application.Mailing.Models;
 
 namespace Sample.Architecture.Infrastructure.Mailing.Wrappers;
-internal class RichSmtpClient() : SessionSmtpClient, IRichSmtpClient
+internal sealed class EnrichedMailSenderClient(string identifier) : SessionMailSenderClient, IEnrichedMailSenderClient
 {
-    private readonly string? _name;
+    private readonly string _identifier = identifier;
+    private readonly bool _isDefault = false;
 
-    public string? Name => _name;
-    public bool? IsDefault => _name is null;
+    public string Identifier => _identifier;
+    public bool IsDefault => _isDefault;
 
-    public RichSmtpClient(string name) : this()
+    public EnrichedMailSenderClient(string identifier, bool isDefault) : this(identifier)
     {
-        _name = name;
+        _isDefault = isDefault;
     }
 
     public async Task SendAsync(MailMessageModel mailMessageModel, CancellationToken cancellationToken = default)

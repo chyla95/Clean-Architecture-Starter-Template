@@ -12,9 +12,9 @@ public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection AddMailing(this IServiceCollection services)
     {
-        services.AddAndBindOptions<MailingSenderOptions>(AppSettingsKeyConstants.SmtpClient);
+        services.AddAndBindOptions<MailSenderOptions>(AppSettingsKeyConstants.MailSender);
 
-        services.AddScoped<SmtpClientFactory>();
+        services.AddScoped<IMailSenderClientFactory, MailSenderClientFactory>();
         services.AddScoped<IMailSenderFactory, MailSenderFactory>();
         services.AddScoped<IMailSenderUtility, MailSenderUtility>();
 
