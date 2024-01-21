@@ -27,7 +27,7 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer();
 
 // Services from Sample.Architecture.Infrastructure.Mailing
-builder.Services.AddMailing();
+builder.Services.AddMailSender();
 
 // Services from Sample.Application.WebApi.Common
 builder.Services.AddAccessors();

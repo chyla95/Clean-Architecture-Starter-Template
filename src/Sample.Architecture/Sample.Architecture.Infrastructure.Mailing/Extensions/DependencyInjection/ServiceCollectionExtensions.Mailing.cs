@@ -10,7 +10,7 @@ using Sample.Architecture.Infrastructure.Mailing.Utilities;
 namespace Sample.Architecture.Infrastructure.Mailing.Extensions.DependencyInjection;
 public static partial class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddMailing(this IServiceCollection services)
+    public static IServiceCollection AddMailSender(this IServiceCollection services)
     {
         services.AddAndBindOptions<MailSenderOptions>(AppSettingsKeyConstants.MailSender);
 
