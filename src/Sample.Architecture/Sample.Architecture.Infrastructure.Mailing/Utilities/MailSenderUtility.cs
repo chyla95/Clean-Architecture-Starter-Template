@@ -9,7 +9,7 @@ internal sealed class MailSenderUtility(IMailSenderClientFactory mailSenderClien
     private readonly IMailSenderClientFactory _mailSenderClientFactory = mailSenderClientFactory;
     private readonly string? _mailSenderClientName;
 
-    public MailSenderUtility(IMailSenderClientFactory smtpClientFactory, string mailSenderClientName) : this(smtpClientFactory)
+    public MailSenderUtility(IMailSenderClientFactory mailSenderClientFactory, string mailSenderClientName) : this(mailSenderClientFactory)
     {
         _mailSenderClientName = mailSenderClientName;
     }
