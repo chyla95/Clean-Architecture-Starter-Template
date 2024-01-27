@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Sample.Authentication.Jwt.Options;
-using Sample.Authentication.Jwt.Strategies;
+using Sample.Architecture.Extensions.Application.Authentication.Jwt.Options;
+using Sample.Architecture.Extensions.Application.Authentication.Jwt.Strategies;
+using Sample.Architecture.Extensions.Application.Common.Abstractions.Utilities;
 using System.Security.Cryptography;
-using Sample.Architecture.Application.Utilities;
 
 namespace Sample.Application.WebApi.Common.Strategies;
 public sealed class JwtGeneratorSigningCredentialsCreationStrategy(IOptionsMonitor<JwtGeneratorOptions> jwtGeneratorOptionsMonitor, IFileUtility fileUtility)

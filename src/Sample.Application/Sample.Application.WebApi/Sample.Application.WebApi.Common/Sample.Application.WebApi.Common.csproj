@@ -11,11 +11,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Sample.Architecture.Extensions\Sample.Architecture.Extensions.Application.Authentication.Common\Sample.Architecture.Extensions.Application.Authentication.Common.csproj" />
+	  <ProjectReference Include="..\..\..\Sample.Architecture.Extensions\Sample.Architecture.Extensions.Application.Authentication.Jwt\Sample.Architecture.Extensions.Application.Authentication.Jwt.csproj" />
+	  <ProjectReference Include="..\..\..\Sample.Architecture.Extensions\Sample.Architecture.Extensions.Infrastructure.Authentication.Common\Sample.Architecture.Extensions.Infrastructure.Authentication.Common.csproj" />
+	  <ProjectReference Include="..\..\..\Sample.Architecture.Extensions\Sample.Architecture.Extensions.Infrastructure.Authentication.Jwt\Sample.Architecture.Extensions.Infrastructure.Authentication.Jwt.csproj" />
+	  <ProjectReference Include="..\..\..\Sample.Architecture.Extensions\Sample.Architecture.Extensions.Infrastructure.Common\Sample.Architecture.Extensions.Infrastructure.Common.csproj" />
 	  <ProjectReference Include="..\..\..\Sample.Architecture\Sample.Architecture.Application\Sample.Architecture.Application.csproj" />
 	  <ProjectReference Include="..\..\..\Sample.Architecture\Sample.Architecture.Domain\Sample.Architecture.Domain.csproj" />
 	  <ProjectReference Include="..\..\..\Sample.Architecture\Sample.Architecture.Infrastructure\Sample.Architecture.Infrastructure.csproj" />
-	  <ProjectReference Include="..\..\..\Sample.Authentication\Sample.Authentication.Common\Sample.Authentication.Common.csproj" />
-	  <ProjectReference Include="..\..\..\Sample.Authentication\Sample.Authentication.Jwt\Sample.Authentication.Jwt.csproj" />
 	</ItemGroup>
 	
 </Project>

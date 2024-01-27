@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Sample.Architecture\Sample.Architecture.Application\Sample.Architecture.Application.csproj" />
+	  <ProjectReference Include="..\..\..\Sample.Architecture\Sample.Architecture.Domain\Sample.Architecture.Domain.csproj" />
+	  <ProjectReference Include="..\..\..\Sample.Architecture\Sample.Architecture.Infrastructure\Sample.Architecture.Infrastructure.csproj" />
+	  <ProjectReference Include="..\..\..\Sample.Extensions.Authentication\Sample.Architecture.Extensions.Infrastructure.Authentication.Common\Sample.Architecture.Extensions.Infrastructure.Authentication.Common.csproj" />
+	  <ProjectReference Include="..\..\..\Sample.Extensions.Authentication\Sample.Architecture.Extensions.Infrastructure.Authentication.Jwt\Sample.Architecture.Extensions.Infrastructure.Authentication.Jwt.csproj" />
+	</ItemGroup>
+	
+</Project>
