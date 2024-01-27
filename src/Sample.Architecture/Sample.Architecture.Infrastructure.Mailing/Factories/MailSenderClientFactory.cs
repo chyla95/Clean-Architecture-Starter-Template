@@ -17,13 +17,8 @@ internal sealed class MailSenderClientFactory(IOptionsMonitor<MailSenderOptions>
         IEnrichedMailSenderClient? mailSenderClient = _mailSenderClients.SingleOrDefault(sc => sc.IsDefault == true);
         if (mailSenderClient is not null) return mailSenderClient;
 
-        MailSenderClientOptions mailingSenderOptions = _mailSenderOptionsMonitor.CurrentValue.DefaultMailSenderClientOptions;
-        mailSenderClient = await CreateMailSenderClientAsync(mailingSenderOptions, true, cancellationToken);
-
-        bool wasMailSenderClientAdded = _mailSenderClients.Add(mailSenderClient);
-        if (!wasMailSenderClientAdded) throw new InvalidOperationException($"Could not add '{nameof(mailSenderClient)}' to '{nameof(_mailSenderClients)}' collection");
-
-        return mailSenderClient;
+        IEnrichedMailSenderClient enrichedMailSenderClient = await CreateMailSenderClientFromOptionsAsync(mso => mso.IsDefault == true, cancellationToken);
+        return enrichedMailSenderClient;
     }
 
     public async Task<IEnrichedMailSenderClient> GetMailSenderClientAsync(string identifier, CancellationToken cancellationToken = default)
@@ -31,28 +26,24 @@ internal sealed class MailSenderClientFactory(IOptionsMonitor<MailSenderOptions>
         IEnrichedMailSenderClient? mailSenderClient = _mailSenderClients.SingleOrDefault(sc => sc.Identifier == identifier);
         if (mailSenderClient is not null) return mailSenderClient;
 
-        IEnumerable<MailSenderClientOptions> mailingSendersOptions = _mailSenderOptionsMonitor.CurrentValue.OtherMailSenderClientsOptions;
-        MailSenderClientOptions? mailingSenderOptions = mailingSendersOptions.SingleOrDefault(mso => mso.Identifier == identifier);
-        if (mailingSenderOptions is null) throw new NullReferenceException($"There is no matching configuration for '{identifier}'");
+        IEnrichedMailSenderClient enrichedMailSenderClient = await CreateMailSenderClientFromOptionsAsync(mso => mso.Identifier == identifier, cancellationToken);
+        return enrichedMailSenderClient;
+    }
 
-        mailSenderClient = await CreateMailSenderClientAsync(mailingSenderOptions, false, cancellationToken);
+    private async Task<IEnrichedMailSenderClient> CreateMailSenderClientFromOptionsAsync(Func<MailSenderClientOptions, bool> optionsPredicate, CancellationToken cancellationToken = default)
+    {
+        IEnumerable<MailSenderClientOptions> mailingSendersOptions = _mailSenderOptionsMonitor.CurrentValue.MailSenderClients;
+        MailSenderClientOptions? mailingSenderOptions = mailingSendersOptions.SingleOrDefault(optionsPredicate);
+        if (mailingSenderOptions is null) throw new NullReferenceException($"Could not find options that would meet specified conditions, to create {nameof(IEnrichedMailSenderClient)}");
+
+        EnrichedMailSenderClient mailSenderClient = new(mailingSenderOptions.Identifier, mailingSenderOptions.IsDefault);
+        await mailSenderClient.CreateSessionAsync(mailingSenderOptions, cancellationToken);
         bool wasMailSenderClientAdded = _mailSenderClients.Add(mailSenderClient);
         if (!wasMailSenderClientAdded) throw new InvalidOperationException($"Could not add '{nameof(mailSenderClient)}' to '{nameof(_mailSenderClients)}' collection");
 
-        return mailSenderClient;
-    }
-
-    private static async Task<IEnrichedMailSenderClient> CreateMailSenderClientAsync(MailSenderClientOptions mailingSenderOptions, bool isDefault = false, CancellationToken cancellationToken = default)
-    {
         // Some Antiviruses may cause problems with "certificate revocation" for some SMTP servers,
         // to bypass this, set "CheckCertificateRevocation" to "false", like follows:
         // mailSenderClient.CheckCertificateRevocation = false;
-
-        EnrichedMailSenderClient mailSenderClient = isDefault
-            ? new(mailingSenderOptions.Identifier, isDefault)
-            : new(mailingSenderOptions.Identifier);
-
-        await mailSenderClient.CreateSessionAsync(mailingSenderOptions, cancellationToken);
 
         return mailSenderClient;
     }

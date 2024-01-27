@@ -52,5 +52,11 @@ public sealed class MailMessageBuilder
         return this;
     }
 
-    public MailMessageModel CreateMailMessage() => _mailMessage;
+    public MailMessageModel CreateMailMessage()
+    {
+        if (_mailMessage.Senders.Count < 1) throw new InvalidOperationException("There should be at least one message sender defined");
+        if (_mailMessage.Recipients.Count < 1) throw new InvalidOperationException("There should be at least one message recipent defined");
+
+        return _mailMessage;
+    }
 }
