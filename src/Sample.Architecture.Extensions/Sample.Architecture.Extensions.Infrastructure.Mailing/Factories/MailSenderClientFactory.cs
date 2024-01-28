@@ -17,7 +17,7 @@ internal sealed class MailSenderClientFactory(IOptionsMonitor<MailSenderOptions>
         IEnrichedMailSenderClient? mailSenderClient = _mailSenderClients.SingleOrDefault(sc => sc.IsDefault == true);
         if (mailSenderClient is not null) return mailSenderClient;
 
-        IEnrichedMailSenderClient enrichedMailSenderClient = await CreateMailSenderClientFromOptionsAsync(mso => mso.IsDefault == true, cancellationToken);
+        IEnrichedMailSenderClient enrichedMailSenderClient = await CreateMailSenderClientAsync(mso => mso.IsDefault == true, cancellationToken);
         return enrichedMailSenderClient;
     }
 
@@ -26,11 +26,11 @@ internal sealed class MailSenderClientFactory(IOptionsMonitor<MailSenderOptions>
         IEnrichedMailSenderClient? mailSenderClient = _mailSenderClients.SingleOrDefault(sc => sc.Identifier == identifier);
         if (mailSenderClient is not null) return mailSenderClient;
 
-        IEnrichedMailSenderClient enrichedMailSenderClient = await CreateMailSenderClientFromOptionsAsync(mso => mso.Identifier == identifier, cancellationToken);
+        IEnrichedMailSenderClient enrichedMailSenderClient = await CreateMailSenderClientAsync(mso => mso.Identifier == identifier, cancellationToken);
         return enrichedMailSenderClient;
     }
 
-    private async Task<IEnrichedMailSenderClient> CreateMailSenderClientFromOptionsAsync(Func<MailSenderClientOptions, bool> optionsPredicate, CancellationToken cancellationToken = default)
+    private async Task<IEnrichedMailSenderClient> CreateMailSenderClientAsync(Func<MailSenderClientOptions, bool> optionsPredicate, CancellationToken cancellationToken = default)
     {
         IEnumerable<MailSenderClientOptions> mailingSendersOptions = _mailSenderOptionsMonitor.CurrentValue.MailSenderClients;
         MailSenderClientOptions? mailingSenderOptions = mailingSendersOptions.SingleOrDefault(optionsPredicate);
