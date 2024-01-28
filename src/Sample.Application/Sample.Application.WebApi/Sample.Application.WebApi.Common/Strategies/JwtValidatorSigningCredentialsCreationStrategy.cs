@@ -1,10 +1,11 @@
-﻿﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Sample.Authentication.Jwt.Options;
-using Sample.Architecture.Application.Utilities;
+using Sample.Architecture.Extensions.Application.Authentication.Jwt.Options;
+using Sample.Architecture.Extensions.Application.Authentication.Jwt.Strategies;
+using Sample.Architecture.Extensions.Application.Common.Abstractions.Utilities;
 using System.Security.Cryptography;
 
-namespace Sample.Authentication.Jwt.Strategies;
+namespace Sample.Architecture.Extensions.Infrastructure.Authentication.Jwt.Strategies;
 public sealed class JwtValidatorSigningCredentialsCreationStrategy(IOptionsMonitor<JwtValidatorOptions> jwtValidatorOptionsMonitor, IFileUtility fileUtility)
     : IJwtValidatorSigningCredentialsCreationStrategy, IDisposable
 {
